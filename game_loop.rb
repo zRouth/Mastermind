@@ -5,11 +5,10 @@ require 'time'
 
 class GameLoop
 
-  attr_reader :command, :display
+  attr_reader :input, :display, :round_counter, :final_code, :display, :guess, :timer
 
-  def initialize(opener)
-    @opener = opener
-    @command = ''
+  def initialize(input)
+    @input = input
     @round_counter = 0
     @final_code = SequenceGenerator.new.generate_sequence
     @display = DisplayPrinter.new
@@ -18,7 +17,7 @@ class GameLoop
   end
 
   def play_game
-    until @opener.command == "q" || @opener.command == "quit"
+    until quit? || lose
     player_guess
     end
   end
@@ -27,22 +26,33 @@ class GameLoop
     win
     @round_counter += 1
     puts display.keep_guessing
-    @opener.command = gets.strip
-    puts @display.error_message if @guess.invalid_guess(@opener.command)
-    @final_code
-    position = @guess.positions(@final_code, @opener.command)
-    color = @guess.find_colors(@final_code, @opener.command)
-    puts @display.color_position(color, position)
+    input.get
+    if quit?
+      then puts @display.quitting
+    else
+      puts @display.error_message if @guess.invalid_guess(input.input)
+      @final_code
+      position = @guess.positions(@final_code, input.input)
+      color = @guess.find_colors(@final_code, input.input)
+      puts @display.color_position(color, position)
+    end
   end
 
   def win
-    if @opener.command == @final_code
+    if input.input == @final_code
       time_in_seconds = (Time.now - @timer).to_i
       puts @display.you_win(@final_code, @round_counter, time_in_seconds)
       exit
     end
   end
 
+  def quit?
+    input.input == "q" || input.input == "quit"
+  end
+
+  def lose
+    puts display.you_lose if round_counter == 10
+  end
 
 end
 
