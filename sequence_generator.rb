@@ -1,5 +1,7 @@
 class SequenceGenerator
 
+  attr_reader :colors, :sequence
+
   def initialize
     @colors = ['r','g','b','y']
     @sequence = ''

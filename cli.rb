@@ -1,20 +1,20 @@
 require_relative 'game_loop'
 require_relative 'display'
+require_relative 'user_input'
 
-class Opener
+class CLI
 
-  attr_reader :display
-  attr_accessor :command
+  attr_reader :display, :input
 
   def initialize
-    @command = ""
+    @input = UserInput.new
     @display = DisplayPrinter.new
   end
 
   def start
     puts display.welcome
     until exit?
-      @command = gets.strip
+      input.get
       options
     end
   end
@@ -23,7 +23,7 @@ class Opener
     case
     when play?
       puts display.first_guess
-      game = GameLoop.new(self)
+      game = GameLoop.new(input)
       game.play_game
     when instructions?
       puts display.instructions
@@ -36,15 +36,15 @@ class Opener
 
 
   def instructions?
-    command == "i" || command == "instructions"
+    input.input == "i" || input.input == "instructions"
   end
 
   def exit?
-    command == "q" || command == "quit"
+    input.input == "q" || input.input== "quit"
   end
 
   def play?
-    command == "p" || command == "play"
+    input.input == "p" || input.input == "play"
   end
 
 end

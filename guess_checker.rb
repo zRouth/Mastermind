@@ -4,9 +4,9 @@ require_relative 'game_loop'
 
 class GuessChecker
 
-  def initialize
-    @display = DisplayPrinter.new
-  end
+  # def initialize
+  #   @display = DisplayPrinter.new
+  # end
 
 
   def positions(code, guess)

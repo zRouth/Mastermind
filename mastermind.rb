@@ -1,6 +1,6 @@
 require_relative 'game_loop'
-require_relative 'open_mastermind2'
+require_relative 'cli'
 require_relative 'display'
 
-opener = Opener.new
+opener = CLI.new
 opener.start

@@ -19,7 +19,7 @@ class DisplayPrinter
     "To start, the computer generates a sequence of random colors in selected positions unbeknownst to you.\n" +
     "On your first turn you will select 4 colors in the order you think the computer has generated.\n" +
     "The computer will then tell you which colors were correct and which positions (if any) were correct.\n" +
-    "You will continue this guessing process until you have either guessed the color and positions correct or you run out of turns.\n" +
+    "You will continue this guessing process until you have either guessed the color and positions correct or you quit the game.\n" +
     "Would you like to (p)lay, read the (i)nstructions, or (q)uit?"
   end
 
